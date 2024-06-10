@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boarding Pass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .boarding-pass {
+            width: 600px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+            box-sizing: border-box;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .boarding-pass-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .boarding-pass-info p {
+            margin: 0;
+        }
+
+        .boarding-pass-info .label {
+            font-weight: bold;
+        }
+
+        .thank-you {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: green;
+        }
+
+        #countdown {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #007bff; /* Blue text color for countdown */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="boarding-pass">
+        <div class="thank-you">Thank You for booking with us!! here is your ticket</div>
+        <div class="header">
+            <h2>Boarding Pass</h2>
+            <p>Flight: <%= b.fid %></p>
+        </div>
+        <div class="boarding-pass-info">
+            <p class="label">PNR:</p>
+            <p><%= pnr %></p>
+        </div>
+        <div class="boarding-pass-info">
+            <p class="label">Head Passenger:</p>
+            <p><%= head_passenger %></p>
+        </div>
+        <!-- <div class="boarding-pass-info">
+            <p class="label">Price Per Ticket:</p>
+            <p><%=b.price %></p>
+        </div> -->
+        <div class="boarding-pass-info">
+            <p class="label">Number of Passengers:</p>
+            <p><%= num_passenger %></p>
+        </div>
+        <div class="boarding-pass-info">
+            <p class="label">Time:</p>
+            <p><%= b.dept_time %></p>
+        </div>
+        <div class="boarding-pass-info">
+            <p class="label">Date:</p>
+            <p><%= new Date(b.date).toLocaleDateString('en-GB') %></p>
+        </div>
+        <div class="boarding-pass-info">
+            <p class="label">Departure Airport:</p>
+            <p><%= src %></p>
+        </div>
+        <div class="boarding-pass-info">
+            <p class="label">Arrival Airport:</p>
+            <p><%= dst %></p>
+        </div>
+        <p id="countdown">Redirecting  to home page in 5 seconds...</p> 
+    </div>
+
+    <script>
+       
+        let countdown = 10; 
+        let countdownElement = document.getElementById('countdown');
+
+        function updateCountdown() {
+            countdown--;
+            countdownElement.innerText = `Redirecting in ${countdown} seconds...`;
+
+            if (countdown <= 0) {
+                clearInterval(intervalId); 
+                window.location.href = "/"; 
+            }
+        }
+
+        let intervalId = setInterval(updateCountdown, 1000); 
+    </script>
+</body>
+
+</html>

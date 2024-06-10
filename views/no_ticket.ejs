@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+    .message {
+      color: red;
+      text-align: center;
+      margin-top: 20vh;
+      font-size: 24px;
+    }
+    #countdown {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #007bff; /* Blue text color for countdown */
+        }
+  </style>
+  <script>
+    setTimeout(function(){
+      window.location.href = "other_page.html";
+    }, 5000);
+  </script>
+</head>
+<body>
+
+<div class="message">
+  <p>Sorry, no ticket exist for this PNR.</p>
+  <p id="countdown">Redirecting  to home page in 5 seconds...</p> 
+</div>
+
+</body>
+<script>
+       
+  let countdown = 5; 
+  let countdownElement = document.getElementById('countdown');
+
+  function updateCountdown() {
+      countdown--;
+      countdownElement.innerText = `Redirecting to home page in  ${countdown} seconds...`;
+
+      if (countdown <= 0) {
+          // clearInterval(intervalId); 
+          window.location.href = "/"; 
+      }
+  }
+
+  let intervalId = setInterval(updateCountdown, 1000); 
+</script>
+</html>

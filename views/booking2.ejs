@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking Form</title>
+    <style>
+        body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.form-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.passenger-info {
+    width: 100%;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.passenger-info h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 50%;
+    padding: 15px 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#passengerDetails {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.contact-input.invalid {
+    border: 1px solid red;
+}
+
+.passenger-info {
+    flex: 1;
+    margin: 15px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Flight Booking</h1>
+        <form action="/confirm-booking" method="POST" class="form-content">
+            <input type="hidden" id="flightId" name="flightId" value="<%= flightId %>">
+            <%  %>
+            <div class="passenger-info">
+                <h2>Head Passenger Information</h2>
+                <label for="headPassengerName">Name:</label>
+                <input type="text" id="headPassengerName" name="headPassengerName" required>
+                <label for="headPassengerContact">Contact Number:</label>
+                <input type="text" id="headPassengerContact" name="headPassengerContact"  title="Please enter a 10-digit contact number" required class="contact-input">
+
+                <label for="headPassengerAge">Age:</label>
+                <input type="number" id="headPassengerAge" name="headPassengerAge" min="0" required>
+                <label for="headPassengerGender">Gender:</label>
+                <select id="headPassengerGender" name="headPassengerGender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+                <label for="numberOfPassengers">Number of Other Passengers:</label>
+                <input type="number" id="numberOfPassengers" name="numberOfPassengers" min="0"    >
+                <label for="passengerSpecialServices">Special Services:</label>
+                <select id="passengerSpecialServices" name="SpecialServices" required>
+                    <option value="none">None</option>
+                    <option value="priorityCheckIn">Priority Check-In</option>
+                    <option value="priorityBaggage">Priority Baggage</option>
+                    <option value="meal">Meal</option>
+                    <option value="allServices">All Services</option>
+                </select>
+                <label for="passengerType">Type:</label>
+            <select id="passengerType" name="passengerType" required>
+            <option value="economy">Economy</option>
+            <option value="business">Business</option>
+            <option value="first">First Class</option>
+             </select>
+            </div>
+            <div id="passengerDetails">
+                <!-- Passenger details will be dynamically added here -->
+            </div>
+            <button type="submit">Book Flight</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Assuming seats_left is a JavaScript variable holding the available seats
+        var seatsLeft = <%- seats_left %>;
+
+            console.log(seatsLeft)
+            document.getElementById("numberOfPassengers").setAttribute("max", seatsLeft);   
+    </script>
+    <script>
+
+        $(document).ready(function() {
+    $('#headPassengerContact').on('input', function() {
+        var input = $(this);
+        if (input.val().length < 10) {
+            input.addClass('invalid');
+        } else {
+            input.removeClass('invalid');
+        }
+    });
+});
+
+        $(document).ready(function() {
+            $('#numberOfPassengers').on('input', function() {
+                const numberOfPassengers = $(this).val();
+                $('#passengerDetails').empty();
+                for (let i = 0; i < numberOfPassengers; i++) {
+                    $('#passengerDetails').append(`
+                        <div class="passenger-info">
+                            <h2>Passenger ${i + 1} Details</h2>
+                            <label for="passengerName${i + 1}">Name:</label>
+                            <input type="text" id="passengerName${i + 1}" name="passengerName${i + 1}" required>
+                            <label for="passengerContact${i + 1}">Contact Number:</label>
+                            <input type="text" id="passengerContact${i + 1}" name="passengerContact${i + 1}" required>
+                            <label for="passengerAge${i + 1}">Age:</label>
+                            <input type="number" id="passengerAge${i + 1}" name="passengerAge${i + 1}" min="0" required>
+                            <label for="passengerGender${i + 1}">Gender:</label>
+                            <select id="passengerGender${i + 1}" name="passengerGender${i + 1}" required>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    `);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

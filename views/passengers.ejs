@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight and Passenger Details</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Google Fonts - Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .card {
+            background-color: #f8f9fa;
+            border-color: #d1d3e2;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            color: #007bff;
+            font-weight: 700;
+        }
+
+        .card-text {
+            color: #6c757d;
+            font-weight: 400;
+        }
+
+        .card-deck {
+            margin-bottom: 20px;
+        }
+
+        .flight-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .no-passengers-message {
+            color: #dc3545;
+            font-weight: 700;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .book-button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Custom styles for flight details box */
+        .flight-details-box {
+            background-color: rgb(173, 250, 255);
+            border-color: #d1d3e2;
+            border-radius: 10px;
+            padding: 30px; /* Increased padding */
+            margin-bottom: 20px;
+            color: #00ff26; /* Changed font color */
+        }
+
+        .flight-details-title {
+            color: green;
+            font-weight: 700;
+            font-size: 24px; /* Increased font size */
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <!-- Flight Details Box -->
+        <div class="flight-details-box">
+            <h2 class="flight-details-title">Flight Details</h2>
+            <% if (flightDetails) { %>
+                <div class="flight-details">
+                    <p class="card-text ml-3"><strong>Flight ID:</strong> <%= flightDetails.fid %></p>
+                    <p class="card-text ml-3"><strong>Date:</strong> <%= new Date(flightDetails.date).toLocaleDateString('en-GB') %></p>
+                    <p class="card-text ml-3"><strong>Departure Time:</strong> <%= flightDetails.dept_time %></p>
+                    <p class="card-text ml-3"><strong>Arrival Time:</strong> <%= flightDetails.arr_time %></p>
+                    <p class="card-text ml-3"><strong>Source:</strong> <%= src %></p> <!-- Added source field -->
+                    <p class="card-text ml-3"><strong>Destination:</strong> <%= dst %></p> <!-- Added destination field -->
+                </div>
+                
+            <% } %>
+        </div>
+        
+        <!-- Passenger Details -->
+        <h1 class="mb-4">Passenger Details</h1>
+        <% if (passengers.length === 0) { %>
+        <p class="no-passengers-message">Oh sorry, there are no passengers available for this flight.</p>
+        <% } else { %>
+        <% passengers.forEach(passenger => { %>
+        <% const p = passenger.pid; %>
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Passenger ID: <%= p %></h5>
+                    <div class="flight-details">
+                        <p class="card-text">PNR: <%= passenger.pnr %></p>
+                        <p class="card-text">Name: <%= passenger.name %></p>
+                        <p class="card-text">Gender: <%= passenger.gender %></p>
+                        <p class="card-text">Seat No: <%= passenger.seat_no %></p>
+                        <p class="card-text">Age: <%= passenger.age %></p>
+                        <p class="card-text">Contact: <%= passenger.contact %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+        <% } %>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (jQuery, Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</

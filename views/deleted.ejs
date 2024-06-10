@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Cancellation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3; 
+      color: #008000; 
+      text-align: center;
+      margin-top: 100px; 
+    }
+    h1 {
+      font-size: 26px; 
+      margin-bottom: 20px; 
+    }
+    p {
+      font-size: 20px; 
+      margin-top: 20px;
+    }
+    #countdown {
+      font-size: 24px;
+      margin-top: 30px;
+      color: #007bff; 
+    }
+  </style>
+</head>
+<body>
+  <h1>Your ticket has been cancelled successfully</h1>
+  <p>Thank you for booking with us!</p>
+  <p id="countdown">Redirecting in 5 seconds...</p>
+
+  <script>
+   
+    let countdown = 5; 
+    let countdownElement = document.getElementById("countdown");
+    
+    
+    function updateCountdown() {
+      countdownElement.textContent = `Redirecting in ${countdown} seconds...`;
+      countdown--;
+      if (countdown < 0) {
+        window.location.replace("/"); 
+      } else {
+        setTimeout(updateCountdown, 1000);
+      }
+    }
+
+   
+    updateCountdown();
+  </script>
+</body>
+</html>
